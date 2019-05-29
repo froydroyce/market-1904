@@ -35,4 +35,14 @@ class Market
   def sorted_item_list
     total_inventory.keys.sort
   end
+
+  def sell(item, amount)
+    return false if total_inventory[item] < amount
+    vendors_that_sell(item).map do |vendor|
+      if vendor.inventory[item] < amount
+        amount - vendor.inventory[item]
+      end
+      return true
+    end
+  end
 end
